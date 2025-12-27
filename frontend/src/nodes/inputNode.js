@@ -1,8 +1,7 @@
 // inputNode.js
 
 import { useState } from 'react';
-import { Position } from 'reactflow';
-import { BaseNode } from './baseNode';
+import { Handle, Position } from 'reactflow';
 
 export const InputNode = ({ id, data }) => {
   const [currName, setCurrName] = useState(data?.inputName || id.replace('customInput-', 'input_'));
@@ -16,27 +15,35 @@ export const InputNode = ({ id, data }) => {
     setInputType(e.target.value);
   };
 
-  const handles = [
-    { type: 'source', position: Position.Right, id: `${id}-value` }
-  ];
-
   return (
-    <BaseNode id={id} data={data} title="Input" handles={handles}>
-      <label>
-        Name:
-        <input
-          type="text"
-          value={currName}
-          onChange={handleNameChange}
-        />
-      </label>
-      <label>
-        Type:
-        <select value={inputType} onChange={handleTypeChange}>
-          <option value="Text">Text</option>
-          <option value="File">File</option>
-        </select>
-      </label>
-    </BaseNode>
+    <div className="base-node">
+      <Handle
+        type="source"
+        position={Position.Right}
+        id={`${id}-value`}
+      />
+
+      <div className="node-header">
+        <span className="node-title">Input</span>
+      </div>
+
+      <div className="node-content">
+        <label>
+          Name:
+          <input
+            type="text"
+            value={currName}
+            onChange={handleNameChange}
+          />
+        </label>
+        <label>
+          Type:
+          <select value={inputType} onChange={handleTypeChange}>
+            <option value="Text">Text</option>
+            <option value="File">File</option>
+          </select>
+        </label>
+      </div>
+    </div>
   );
 }
